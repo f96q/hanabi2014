@@ -32,7 +32,7 @@ class @Fireworks
     @sparkSize = @settings.sparkSize
     @sparks = []
     @initSparks()
-    @timer_id = setInterval @update, 1000 / 60
+    requestAnimationFrame @update
 
   update: =>
     for spark in @sparks
@@ -46,8 +46,9 @@ class @Fireworks
     @context.fillRect 0, 0, @canvas.width, @canvas.height
     @sparkSize *= 0.97
     if @sparkSize < 0.03
-      clearInterval @timer_id
       @fire()
+      return
+    requestAnimationFrame @update
 
   draw: (spark) ->
     @context.fillStyle = '#723057'
